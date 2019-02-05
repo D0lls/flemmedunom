@@ -1,0 +1,14 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+    <div><h1 id="h1News">IUT' News</h1></div>
+
+ 	<img src="../img/Logo_IUT_LCO" alt="logo" id="logoNews" > 
+
+	<h2><marquee id="defilementNews" direction="up" scrollamount="20" loop="-1">
+    {% for message in listemessage %}
+		<p>{{ message.contenu }}</p>
+		<p>{{ message.auteur }}</p>
+		<p>{{ message.date }}</p>
+	{% endfor %}
+	</marquee></h2>
+{% endblock %}

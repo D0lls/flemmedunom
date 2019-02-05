@@ -28,6 +28,14 @@ $app->post('/ajoutmessage', function(Request $request) use ($app) {
 })
 ->bind('formulairemessage')
 ;
+
+$app->get('/news', function () use ($app) {
+    $messageModel = new messageModels();
+    $message = $messageModel->getMessages($app);
+    return $app['twig']->render('news.html.twig', array('listemessage'=> $message));
+})->bind('affichage')
+;
+
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
