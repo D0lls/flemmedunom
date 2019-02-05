@@ -41,6 +41,7 @@ CREATE TABLE `attente` (
 CREATE TABLE `informations` (
   `id_info` int(11) NOT NULL,
   `contenu` text NOT NULL,
+  `auteur` text NOT NULL,
   `date` date NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
