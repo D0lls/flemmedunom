@@ -38,7 +38,7 @@ CREATE TABLE `attente` (
 -- Structure de la table `information`
 --
 
-CREATE TABLE `information` (
+CREATE TABLE `informations` (
   `id_info` int(11) NOT NULL,
   `contenu` text NOT NULL,
   `date` date NOT NULL
