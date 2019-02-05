@@ -83,7 +83,7 @@ ALTER TABLE `attente`
 --
 -- Index pour la table `information`
 --
-ALTER TABLE `information`
+ALTER TABLE `informations`
   ADD PRIMARY KEY (`id_info`);
 
 --
@@ -110,7 +110,7 @@ ALTER TABLE `attente`
 --
 -- AUTO_INCREMENT pour la table `information`
 --
-ALTER TABLE `information`
+ALTER TABLE `informations`
   MODIFY `id_info` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `role`
