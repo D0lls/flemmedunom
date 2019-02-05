@@ -1,0 +1,9 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+    Welcome to your new Silex Applications!
+    {% for message in listemessage %}
+		<p>{{ message.contenu }}</p>
+		<p>{{ message.auteur }}</p>
+		<p>{{ message.date }}</p>
+	{% endfor %}
+{% endblock %}
