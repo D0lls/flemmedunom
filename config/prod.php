@@ -14,3 +14,4 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 		'charset'  => 'utf8'
 	)
 ));
+$app->register(new Silex\Provider\SessionServiceProvider());
