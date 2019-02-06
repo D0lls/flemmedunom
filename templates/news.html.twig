@@ -4,11 +4,12 @@
 
  	<img src="../img/Logo_IUT_LCO" alt="logo" id="logoNews" > 
 
-	<h2><marquee id="defilementNews" direction="up" scrollamount="20" loop="-1">
+	<h2><marquee id="defilementNews" direction="up" scrollamount="1" loop="-1">
     {% for message in listemessage %}
 		<p>{{ message.contenu }}</p>
 		<p>{{ message.auteur }}</p>
 		<p>{{ message.date }}</p>
+		</br>
 	{% endfor %}
 	</marquee></h2>
 {% endblock %}
