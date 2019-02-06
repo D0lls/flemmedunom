@@ -1,0 +1,36 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+<link href="{{ asset('css/newsmanager.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('js/newsmanager.js') }}"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="todolist not-done">
+             <h1>News en attente</h1>
+                <input type="text" class="form-control add-todo" placeholder="Add todo">
+                    <button id="checkAll" class="btn btn-success">Ajouter une news</button>
+                    
+                    <hr>
+                    <ul id="sortable" class="list-unstyled">
+                    <li class="ui-state-default">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" />Take out the trash</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="todolist">
+             <h1>News actuellement affichées</h1>
+                <ul id="done-items" class="list-unstyled">
+                {% for message in listemessage %}
+                <li data-id="{{ message.id_info }}"><span class="message">{{ message.contenu }}</span> - {{ message.auteur }} - {{ message.date }}</p><button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button><button class="modify-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button></li>
+	            {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

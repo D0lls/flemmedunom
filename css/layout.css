@@ -1,0 +1,13 @@
+#h1News{
+    display: block;
+text-align: center;
+}
+
+#logoNews{
+margin-top: 85%;
+max-width: 30%;
+    height: auto;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}

@@ -19,13 +19,20 @@ $app->get('/connexion', function () use ($app) {
 })
 ->bind('connexion')
 ;
-
+$app->get('/newsmanager', function () use ($app) {
+    $messageModel = new messageModels();
+    $message = $messageModel->getMessages($app);
+    return $app['twig']->render('newsmanager.html.twig', array('listemessage'=> $message));
+})
+->bind('newsmanager')
+;
 $app->post('/checklogin', function (Request $request) use ($app) {
     $messageModel = new messageModels();
     $isValide = $messageModel->checkIfExist($app,$request->get('name'),$request->get('password'));
     if($isValide){
-        $app['session']->set('user', array('username' => "test"));
-        $subRequest = Request::create('/affichage');
+        $app['session']->set('user', $messageModel->getId($app,$request->get('name'),$request->get('password')));
+        $app['session']->set('role', $messageModel->getRole($app,$request->get('name'),$request->get('password')));
+        $subRequest = Request::create('/news');
         return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
     }
     $subRequest = Request::create('/connexion');
@@ -33,22 +40,30 @@ $app->post('/checklogin', function (Request $request) use ($app) {
         }
     );
 
-$app->get('/affichage', function () use ($app) {
-    $messageModel = new messageModels();
-    $message = $messageModel->getMessages($app);
-        var_dump($app['session']->get('user'));
-    return $app['twig']->render('blog.html.twig', array('listemessage'=> $message));
-})
-->bind('affichage')
-;
-
 $app->post('/ajoutmessage', function(Request $request) use ($app) {
     $message = $request->get('message');
     $messageModel = new messageModels();
-    $message = $messageModel->insertMessage($app,$message,'test');
-    return $app['twig']->render('index.html.twig');
+    $message = $messageModel->insertMessage($app,$message,$app['session']->get("user"));
+    return $app->json(array($message));
 })
-->bind('formulairemessage')
+->bind('ajoutmessage')
+;
+$app->post('/supprimermessage', function(Request $request) use ($app) {
+    $id = $request->get('id');
+    $messageModel = new messageModels();
+    $message = $messageModel->removeMessage($app,$id);
+    return $app->json(array($message));
+})
+->bind('supprimermessage')
+;
+$app->post('/modifiermessage', function(Request $request) use ($app) {
+    $id = $request->get('id');
+    $contenu = $request->get('message');
+    $messageModel = new messageModels();
+    $messageModel->updateMessage($app,$id,$contenu);
+    return $app->json(array(true));
+})
+->bind('modifiermessage')
 ;
 
 $app->get('/news', function () use ($app) {
