@@ -2,6 +2,9 @@
 {% block content %}
 <link href="{{ asset('css/newsmanager.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('js/newsmanager.js') }}"></script>
+<script>
+    var role = '{{ role }}';
+</script>
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -11,7 +14,10 @@
                     <button id="checkAll" class="btn btn-success">Ajouter une news</button>
                     <hr>
                     <ul id="sortable" class="list-unstyled">
-                </ul>
+                    {% for messageatt in listemessageattente %}
+                    <li data-id="{{ messageatt.id_attente }}"><span class="message">{{ messageatt.contenu }}</span> - {{ messageatt.auteur }} - {{ messageatt.date }}</p><button class="valid-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-ok"></span></button></li>
+	                {% endfor %}
+                    </ul>
             </div>
         </div>
         <div class="col-md-6">

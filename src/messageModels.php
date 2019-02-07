@@ -6,6 +6,21 @@ class messageModels {
         $sql = "SELECT informations.* FROM informations";
         return $app['db']->fetchAll($sql);
     }
+    public function getMessagesAttente($app){
+        $sql = "SELECT attente.* FROM attente";
+        return $app['db']->fetchAll($sql);
+    }
+    public function validateMessages($app,$id){
+        $sql = "SELECT attente.* FROM attente where attente.id_attente = :attente";
+        $tmp = $app['db']->fetchAll($sql,array(':attente' => $id));
+        $app['db']->delete('attente',array('id_attente' => $id ));
+        $app['db']->insert('informations', array(
+            'contenu' => $tmp[0]["contenu"],
+            'auteur' => $tmp[0]["auteur"]
+        ));
+        $sql = "SELECT informations.* FROM informations order by id_info desc limit 1";
+        return $app['db']->fetchAll($sql);
+    }
     public function insertMessage($app,$contenu,$id_auteur){
         $sql = "SELECT nom FROM utilisateur where utilisateur.id_user = :id";
         $tmp = $app['db']->fetchAll($sql,array(':id' => $id_auteur));
@@ -14,6 +29,16 @@ class messageModels {
             'auteur' => $tmp[0]["nom"]
         ));
         $sql = "SELECT informations.* FROM informations order by id_info desc limit 1";
+        return $app['db']->fetchAll($sql);
+    }
+    public function insertMessageAttente($app,$contenu,$id_auteur){
+        $sql = "SELECT nom FROM utilisateur where utilisateur.id_user = :id";
+        $tmp = $app['db']->fetchAll($sql,array(':id' => $id_auteur));
+        $app['db']->insert('attente', array(
+            'contenu' => $contenu,
+            'auteur' => $tmp[0]["nom"]
+        ));
+        $sql = "SELECT attente.* FROM attente order by id_attente desc limit 1";
         return $app['db']->fetchAll($sql);
     }
     public function removeMessage($app,$id){

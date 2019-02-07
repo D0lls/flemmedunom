@@ -22,7 +22,9 @@ $app->get('/connexion', function () use ($app) {
 $app->get('/newsmanager', function () use ($app) {
     $messageModel = new messageModels();
     $message = $messageModel->getMessages($app);
-    return $app['twig']->render('newsmanager.html.twig', array('listemessage'=> $message));
+    $messageattente = $messageModel->getMessagesAttente($app);
+    return $app['twig']->render('newsmanager.html.twig', array('listemessage'=> $message,'listemessageattente'=> $messageattente
+    ,'role' => $app['session']->get('role')));
 })
 ->bind('newsmanager')
 ;
@@ -59,6 +61,14 @@ $app->post('/ajoutmessage', function(Request $request) use ($app) {
 })
 ->bind('ajoutmessage')
 ;
+$app->post('/ajoutmessageattente', function(Request $request) use ($app) {
+    $message = $request->get('message');
+    $messageModel = new messageModels();
+    $message = $messageModel->insertMessageAttente($app,$message,$app['session']->get("user"));
+    return $app->json(array($message));
+})
+->bind('ajoutmessageattente')
+;
 $app->post('/supprimermessage', function(Request $request) use ($app) {
     $id = $request->get('id');
     $messageModel = new messageModels();
@@ -83,7 +93,14 @@ $app->get('/news', function () use ($app) {
     return $app['twig']->render('news.html.twig', array('listemessage'=> $message));
 })->bind('affichage')
 ;
-
+$app->post('/valider', function (Request $request) use ($app) {
+    $messageModel = new messageModels();
+    $id = $request->get('id');
+    $message = $messageModel->validateMessages($app,$id);
+    return $app->json(array($message));
+})
+->bind('valider')
+;
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
