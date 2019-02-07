@@ -27,6 +27,7 @@ $(document).ready(function () {
     });
     $(document).on("click", ".valid-item", function () {
         console.log("greg");
+        if (role == "moderateur") {
         $(this).closest("li").find(".message").attr("contenteditable", false);
         console.log($(this).closest("li").find(".message").html());
         var li = $(this).closest("li");
@@ -41,6 +42,7 @@ $(document).ready(function () {
                 li.remove();
             }
         });
+    }
     });
     $(document).on("click", ".remove-item", function () {
         console.log($(this).closest("li").attr("data-id"));
@@ -56,7 +58,7 @@ $(document).ready(function () {
     });
     $(document).on("click", ".modify-item", function () {
         $(this).closest("li").find(".message").attr("contenteditable", true);
-        $(this).closest("li").append("<button class='send-modify'>Envoyer</button>")
+        $(this).closest("li").append("<button class='send-modify btn btn-primary'>Envoyer</button>")
         $(this).hide();
         /*
         $.ajax({
