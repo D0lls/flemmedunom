@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `attente` (
   `id_attente` int(11) NOT NULL,
   `contenu` text NOT NULL,
+  `auteur` varchar(50) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -41,7 +42,7 @@ CREATE TABLE `attente` (
 CREATE TABLE `informations` (
   `id_info` int(11) NOT NULL,
   `contenu` text NOT NULL,
-  `auteur` text NOT NULL,
+  `auteur` varchar(50) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
