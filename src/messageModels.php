@@ -40,4 +40,65 @@ class messageModels {
         $tmp = $app['db']->fetchAll($sql,array(':nom' => $name,'mdp' =>$password));
         return $tmp[0]["role"];
     }
+    public function checkIfExistLdap($app,$name,$password){
+        $ldapHost = "ldap://10.10.28.101";
+        $ldapPort = 389;
+        $ldapCon = ldap_connect($ldapHost, $ldapPort) or die();
+        if(ldap_connect($ldapHost, $ldapPort)!=false){
+        ldap_set_option($ldapCon, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldapCon, LDAP_OPT_REFERRALS, 0);
+        $ldapUser = "uid=".$name.",ou=Users,dc=iutcb,dc=univ-littoral,dc=fr";
+        $ldapPwd = $password;
+        $ldapBind = ldap_bind($ldapCon, $ldapUser, $ldapPwd);
+        if($ldapBind){
+            return true;
+        }
+        else{
+            return false;
+        }
+        }else{
+            return false;
+        }
+    }
+    public function getRoleLdap($app,$name,$password){
+        $ldapHost = "ldap://10.10.28.101";
+        $ldapPort = 389;
+        $ldapCon = ldap_connect($ldapHost, $ldapPort) or die();
+        if(ldap_connect($ldapHost, $ldapPort)!=false){
+        ldap_set_option($ldapCon, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldapCon, LDAP_OPT_REFERRALS, 0);
+        $ldapUser = "uid=".$name.",ou=Users,dc=iutcb,dc=univ-littoral,dc=fr";
+        $ldapPwd = $password;
+        $ldapBind = ldap_bind($ldapCon, $ldapUser, $ldapPwd);
+        $dn = "ou=Groups,dc=iutcb,dc=univ-littoral,dc=fr";
+        $filter = "(&(cn=enseignant)(memberuid=nom.prenom))";
+        $elem = array("uid","gidNumber","ou");
+        $ldapSearch = ldap_search($ldapCon, $dn, $filter, $elem);
+        $info = ldap_get_entries($ldapCon, $ldapSearch);
+        if($info["count"]==1){
+            return "moderateur";
+        }else{
+            return "redacteur";
+        }
+        }
+    }
+    public function getIdLdap($app,$name,$password,$role){
+        $sql = "SELECT * FROM utilisateur where utilisateur.nom = :nom";
+        $tmp = $app['db']->fetchAll($sql,array(':nom' => $name));
+        if(empty($tmp) ){
+            $app['db']->insert('utilisateur', array(
+                'nom' => $name,
+                'prenom' => $name,
+                'role' => $role,
+                'mdp' => ""
+            ));
+            $sql = "SELECT id_user FROM utilisateur where utilisateur.nom = :nom";
+        $tmp = $app['db']->fetchAll($sql,array(':nom' => $name));
+        return $tmp[0]["id_user"];
+        }
+        $sql = "SELECT id_user FROM utilisateur where utilisateur.nom = :nom";
+        $tmp = $app['db']->fetchAll($sql,array(':nom' => $name));
+        return $tmp[0]["id_user"];
+    }
+    
 }

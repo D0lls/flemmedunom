@@ -28,11 +28,22 @@ $app->get('/newsmanager', function () use ($app) {
 ;
 $app->post('/checklogin', function (Request $request) use ($app) {
     $messageModel = new messageModels();
-    $isValide = $messageModel->checkIfExist($app,$request->get('name'),$request->get('password'));
+    if($request->get('auth')=="ldap"){
+        $isValide = $messageModel->checkIfExistLdap($app,$request->get('name'),$request->get('password'));
+    }else{
+        $isValide = $messageModel->checkIfExist($app,$request->get('name'),$request->get('password'));
+    }
     if($isValide){
-        $app['session']->set('user', $messageModel->getId($app,$request->get('name'),$request->get('password')));
-        $app['session']->set('role', $messageModel->getRole($app,$request->get('name'),$request->get('password')));
-        $subRequest = Request::create('/news');
+        if($request->get('auth')=="ldap"){
+            $app['session']->set('user', $messageModel->getIdLdap($app,$request->get('name'),$request->get('password'),$messageModel->getRoleLdap($app,$request->get('name'),$request->get('password'))));
+            $app['session']->set('role', $messageModel->getRoleLdap($app,$request->get('name'),$request->get('password')));
+        }else{
+            //$app['session']->set('user', $messageModel->getIdLdap($app,$request->get('name'),$request->get('password')));
+            $app['session']->set('user', $messageModel->getId($app,$request->get('name'),$request->get('password')));
+            $app['session']->set('role', $messageModel->getRole($app,$request->get('name'),$request->get('password')));
+        }
+
+        $subRequest = Request::create('/newsmanager');
         return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
     }
     $subRequest = Request::create('/connexion');
