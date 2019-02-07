@@ -56,5 +56,5 @@ $(document).ready(function () {
 });
 
 function createrow(contenu, id, auteur,date) {
-    $("#done-items").append("<li data-id=" + id + "></span class='message'>" + contenu + "</span>"+auteur+" - " + date + "</p><button class='remove-item btn btn-default btn-xs pull-right'><span class='glyphicon glyphicon-remove'></span></button><button class='modify-item btn btn-default btn-xs pull-right'><span class='glyphicon glyphicon-pencil'></span></button></li>");
+    $("#done-items").append("<li data-id=" + id + "><span class='message'>" + contenu + "</span>"+auteur+" - " + date + "</p><button class='remove-item btn btn-default btn-xs pull-right'><span class='glyphicon glyphicon-remove'></span></button><button class='modify-item btn btn-default btn-xs pull-right'><span class='glyphicon glyphicon-pencil'></span></button></li>");
 }
