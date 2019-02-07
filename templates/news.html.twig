@@ -6,7 +6,7 @@
     {% for message in listemessage %}
 		<div>
 		<p>{{ message.contenu }}</p>
-		<p>{{ message.auteur }}</p>
+		<p>Auteur : {{ message.auteur }}</p>
 		<p>{{ message.date }}</p>
 		</br>
 		<hr width="50%" id="ligne">
@@ -14,5 +14,6 @@
 
 	{% endfor %}
 	</marquee></h2>
+
 
 {% endblock %}
