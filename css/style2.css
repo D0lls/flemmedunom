@@ -4,4 +4,29 @@
     margin: 0 auto;
     height:350px;
     margin-top:0%;
+    text-overflow: clip;
+}
+
+#ligne{
+
+    background-color: black;
+
+}
+
+marquee{
+
+    width: 65%;
+
+}
+
+
+#maxnews{
+
+   width: 75%;
+    margin: 0 auto;
+}
+
+
+#logoNews{
+margin: 0 auto;
 }

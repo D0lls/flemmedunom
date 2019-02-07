@@ -6,15 +6,15 @@
     <!-- Tabs Titles -->
 
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="" id="icon" alt="User Icon" />
+    <div class="fadeIn first mb-3">
+      <span class="glyphicon glyphicon-user"></span>
     </div>
 
     <!-- Login Form -->
-    <form method="post" action="checklogin">
+    <form method="post" action="checklogin" class="mt-2 mb-1">
       <input type="text" id="login" class="fadeIn second" name="name" placeholder="login">
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
-      <select name="auth">
+      <select name="auth" class="fadeIn third">
       <option value="ldap">LDAP</option>
       <option value="bdd">Base de données</option>
       </select><br>
