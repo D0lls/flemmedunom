@@ -36,6 +36,9 @@ li.ui-state-default:last-child{
 #done-items li:last-child{
     border-bottom:none;
 }
+#sortable button{
+    margin-top:-27px;
+}
 #checkAll{
     margin-top:10px;
 }
