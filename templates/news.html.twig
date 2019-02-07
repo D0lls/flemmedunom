@@ -1,5 +1,6 @@
 {% extends "layout.html.twig" %}
 {% block content %}
+<link href="{{ asset('css/style2.css') }}" rel="stylesheet" type="text/css" />
 
 	<h2><marquee id="defilementNews" direction="up" scrollamount="7" loop="-1">
     {% for message in listemessage %}
