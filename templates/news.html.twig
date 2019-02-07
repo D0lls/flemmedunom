@@ -2,12 +2,17 @@
 {% block content %}
 <link href="{{ asset('css/style2.css') }}" rel="stylesheet" type="text/css" />
 
-	<h2><marquee id="defilementNews" direction="up" scrollamount="7" loop="-1">
+	<h2><marquee id="defilementNews" direction="up" scrollamount="8" loop="-1"  >
     {% for message in listemessage %}
+		<div>
 		<p>{{ message.contenu }}</p>
 		<p>{{ message.auteur }}</p>
 		<p>{{ message.date }}</p>
 		</br>
+		<hr width="50%" id="ligne">
+		</br>
+
 	{% endfor %}
 	</marquee></h2>
+
 {% endblock %}
